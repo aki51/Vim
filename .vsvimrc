@@ -1,0 +1,237 @@
+"=============================================================================
+"    Description: .vimrc 設定
+"         Author: K.Akiyama
+"=============================================================================
+
+"----------------------------------------
+" システム設定
+"----------------------------------------
+"ファイルの上書きの前にバックアップをらない
+"set nowritebackup
+
+"バックアップファイルを作成する/しない
+"set nobackup
+
+"スワップファイルを作成する/しない
+"set noswapfile
+
+"クリップボードを共有
+"set clipboard+=unnamed
+set clipboard=unnamed
+
+"8進数を無効にする。<C-a>,<C-x>に影響する
+"set nrformats-=octal
+
+"キーコードやマッピングされたキー列が完了するのを待つ時間(ミリ秒)
+set timeoutlen=3500
+
+"編集結果非保存のバッファから、新しいバッファを開くときに警告を出さない
+"set hidden
+
+"ヒストリの保存数
+set history=50
+
+"日本語の行の連結時には空白を入力しない
+"set formatoptions=mM
+
+"Visual blockモードでフリーカーソルを有効にする
+set virtualedit=block
+
+"カーソルキーで行末／行頭の移動可能に設定
+set whichwrap=b,s,[,],<,>
+
+"バックスペースでインデントや改行を削除できるようにする
+set backspace=indent,eol,start
+
+"□や○の文字があってもカーソル位置がずれないようにする
+"set ambiwidth=double
+
+"コマンドライン補完するときに強化されたものを使う
+"set wildmenu
+
+"マウスを有効にする
+"if has('mouse')
+"  set mouse=a
+"endif
+
+"折りたたみ機能
+"set foldmethod=marker
+
+"Diffモード用の設定
+"set diffopt=filler,iwhite,vertical
+
+"インデント空白数
+set shiftwidth=4
+
+"自動改行オフ
+"set formatoptions=q
+
+" 80文字目にラインを入れる
+"set colorcolumn=80
+
+" 新しく開く代わりにすでに開いてあるバッファを開く
+"set switchbuf=useopen   
+
+"----------------------------------------
+" 検索
+"----------------------------------------
+"検索の時に大文字小文字を区別しない
+"ただし大文字小文字の両方が含まれている場合は大文字小文字を区別する
+set ignorecase
+set smartcase
+
+"検索時にファイルの最後まで行ったら最初に戻る
+set wrapscan
+
+"インクリメンタルサーチ
+set incsearch
+
+"検索文字の強調表示
+set hlsearch
+
+"----------------------------------------
+" 表示設定
+"----------------------------------------
+"スプラッシュ(起動時のメッセージ)を表示しない
+"set shortmess+=I
+
+"エラー時の音とビジュアルベルの抑制(gvimは.gvimrcで設定)
+"set noerrorbells
+"set novisualbell
+"set visualbell t_vb=
+
+"マクロ実行中などの画面再描画を行わない
+"set lazyredraw
+
+"Windowsでディレクトリパスの区切り文字表示に / を使えるようにする
+"set shellslash
+
+"行番号表示
+set number
+
+"括弧の対応表示時間
+"set showmatch matchtime=1
+
+" 対応括弧に'<'と'>'のペアを追加
+"set matchpairs& matchpairs+=<:>
+
+"タブを設定
+"set ts=4 sw=4 sts=4
+
+"自動的にインデントする
+set autoindent
+
+"Cインデントの設定
+"set cinoptions+=:0
+
+"コマンドラインの高さ (gvimはgvimrcで指定)
+"set cmdheight=0
+set laststatus=0
+
+"コマンドをステータス行に表示
+"set showcmd
+
+"画面最後の行をできる限り表示する
+"set display=lastline
+
+"Tab、行末の半角スペースを明示的に表示する
+set list
+"set listchars=tab:>-,extends:<,trail:-,eol:<
+
+" タブの画面上での幅
+set tabstop=4
+
+" タブをスペースに展開しない (expandtab:展開する)
+set expandtab
+
+" 長い行を折り返して表示 (nowrap:折り返さない)
+set nowrap
+
+" ハイライトを有効にする
+if &t_Co > 2 || has('gui_running')
+  syntax on
+endif
+
+"カレント行ハイライト
+set cursorline
+
+"----------------------------------------
+" ノーマルモード
+"----------------------------------------
+" ヘルプ検索
+nnoremap <F1> K
+
+" 現在開いているvimスクリプトファイルを実行
+nnoremap <F8> :source %<CR>
+
+" 強制全保存終了を無効化
+nnoremap ZZ <Nop>
+
+" カーソルをj k では表示行で移動する。物理行移動は<C-n>,<C-p>
+" キーボードマクロには物理行移動を推奨
+" h l は行末、行頭を超えることが可能に設定(whichwrap)
+nnoremap <Down> gj
+nnoremap <Up>   gk
+nnoremap h <Left>
+nnoremap j gj
+nnoremap k gk
+nnoremap l <Right>
+" l を <Right>に置き換えても、折りたたみを l で開くことができるようにする
+" if has('folding')
+"   nnoremap <expr> l foldlevel(line('.')) ? "\<Right>zo" : "\<Right>"
+" endif
+
+" Ctrl + hjkl でウィンドウ間を移動
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Shift + 矢印でウィンドウサイズを変更
+nnoremap <S-Left>  <C-w><<CR>
+nnoremap <S-Right> <C-w>><CR>
+nnoremap <S-Up>    <C-w>-<CR>
+nnoremap <S-Down>  <C-w>+<CR>
+
+" TABにて対応ペアにジャンプ
+nnoremap <Tab> %
+
+" T + ? で各種設定をトグル
+nnoremap [toggle] <Nop>
+nmap T [toggle]
+nnoremap <silent> [toggle]s :setl spell!<CR>:setl spell?<CR>
+nnoremap <silent> [toggle]l :setl list!<CR>:setl list?<CR>
+nnoremap <silent> [toggle]t :setl expandtab!<CR>:setl expandtab?<CR>
+nnoremap <silent> [toggle]w :setl wrap!<CR>:setl wrap?<CR>
+
+" ESCを二回押すことでハイライトを消す
+"nmap <silent> <Esc><Esc> :nohlsearch<C-R>  " <Silent> は Visual Studio の拡張機能 (VsVim) で使用付加のため
+nmap <Esc><Esc> :nohlsearch<CR>
+
+"----------------------------------------
+" 挿入モード
+"----------------------------------------
+" ESCでIMEを確実にOFF
+" inoremap <ESC> <ESC>:set iminsert=0<CR>
+
+"----------------------------------------
+" ビジュアルモード
+"----------------------------------------
+" vを二回で行末まで選択
+vnoremap v $h
+
+" TABにて対応ペアにジャンプ
+vnoremap <Tab> %
+
+" コメントアウト
+vmap <C-k> <Plug>(caw:i:toggle)
+
+"----------------------------------------
+" コマンドモード
+"----------------------------------------
+
+"----------------------------------------
+" Vimスクリプト
+"----------------------------------------
+"
+
